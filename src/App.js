@@ -3,16 +3,16 @@ import { auth } from './firebase/init'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 
 function App() {
+    const [registerEmail, setRegisterEmail] = useState('')
+    const [registerPassword, setRegisterPassword] = useState('')
+    const [loginEmail, setLoginEmail] = useState('')
+    const [loginPassword, setLoginPassword] = useState('')
+
     const [user, setUser] = React.useState({})
 
     onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser)
     })
-
-    const [registerEmail, setRegisterEmail] = useState('')
-    const [registerPassword, setRegisterPassword] = useState('')
-    const [loginEmail, setLoginEmail] = useState('')
-    const [loginPassword, setLoginPassword] = useState('')
 
     // -- FIREBASE AUTH --
     function register() {
@@ -21,7 +21,7 @@ function App() {
                 console.log(user)
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error.message)
             })
     }
     function login() {
@@ -36,7 +36,6 @@ function App() {
     }
     function logout() {
         signOut(auth)
-        setUser({})
     }
 
     return (
